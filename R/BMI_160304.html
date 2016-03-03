@@ -121,7 +121,7 @@ $(document).ready(function () {
 <div id="rn96.txt--" class="section level4">
 <h4><code>rn96.txt</code> 자료 읽어들이기</h4>
 <ul>
-<li><code>&quot;../data/rn96.txt&quot;</code>는 파일 경로이므로 <code>rn96.txt</code>를 다운로드받은 폴더로 지정하면 되나 가급적 <code>R</code> source 를 저장하는 폴더(예를 들어서, <code>R</code>)와 원시 자료를 저장하는 폴더(예를 들어서, <code>data</code>)를 구분해 두는 것이 효과적이다. 원 자료를 보고 변수명에 해당하는 <code>header</code> 매개변수를 <code>TRUE</code> 로 설정한다. <code>&lt;-</code>는 assignment. 아래 주어진 세 가지 표현은 모두 동일한 결과를 가져온다.</li>
+<li><code>&quot;../data/rn96.txt&quot;</code>는 파일 경로이므로 <code>rn96.txt</code>를 다운로드받은 폴더로 지정하면 되나 가급적 <code>R</code> source 를 저장하는 폴더(예를 들어서, 폴더 <code>R</code>)와 원시 자료를 저장하는 폴더(예를 들어서, 폴더 <code>data</code>)를 구분해 두는 것이 효과적이다. 원 자료를 보고 변수명에 해당하는 <code>header</code> 매개변수를 <code>TRUE</code> 로 설정한다. <code>&lt;-</code>는 assignment. 아래 주어진 세 가지 표현은 모두 동일한 결과를 가져온다.</li>
 </ul>
 <pre class="r"><code>rn96 &lt;- read.table(&quot;../data/rn96.txt&quot;, header = TRUE)
 rn96</code></pre>
@@ -255,7 +255,8 @@ rn96.3</code></pre>
 ## 40    168     55
 ## 41    157     48</code></pre>
 <ul>
-<li><code>str()</code>은 자료의 구조를 살피는 함수이며, value는 없다. <code>rn96</code> 의 자료구조를 살펴보면, <code>int</code> class가 나온다. 정수이지만 사칙 연산에는 아무런 영향이 없다.</li>
+<li><p><code>str()</code>은 자료의 구조를 살피는 함수이며, value는 없다. <code>rn96</code> 의 자료구조를 살펴보면, <code>int</code>(integer) class가 나온다. 정수이지만 사칙 연산에는 아무런 영향이 없다.</p></li>
+<li><p><code>sapply()</code>는 <code>rn96</code>의 각 변수에 <code>mode()</code> 또는 <code>class()</code>를 적용한다.</p></li>
 </ul>
 <pre class="r"><code>str(rn96)</code></pre>
 <pre><code>## 'data.frame':    41 obs. of  2 variables:
@@ -283,7 +284,7 @@ rn96.3</code></pre>
 ##  3rd Qu.:162.0   3rd Qu.:55.00  
 ##  Max.   :170.0   Max.   :65.00</code></pre>
 <ul>
-<li>평균과 표준편차를 각 변수별로 살펴보려면 <code>apply()</code>를 이용한다. 이 때 <code>options(digits = 2)</code>가 없으면 출력결과가 어떻게 달라지는지 살펴보고자. 출력 결과에 이름을 붙이는 방법을 보여주고 있다.</li>
+<li>평균과 표준편차를 각 변수별로 살펴보려면 <code>apply()</code>를 이용한다. 이 때 <code>options(digits = 2)</code>가 없으면 출력결과가 어떻게 달라지는지 살펴보자. 출력 결과에 이름을 붙이는 방법을 보여주고 있다.</li>
 </ul>
 <pre class="r"><code>options(&quot;digits&quot;)</code></pre>
 <pre><code>## $digits
