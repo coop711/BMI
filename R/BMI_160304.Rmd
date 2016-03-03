@@ -56,6 +56,7 @@ options(digits = 7)
 #### `height` 와 `weight` 의 산점도 그리기. 
 
 * `x`축에 독립변수로 들어가는 변수와 `y`축에 들어가는 종속변수를 설정하는 여러가지 방법이 있음을 알 수 있다. 동일한 `plot()`이지만 출력 결과에서 default로 나오는 각 축의 label 값이 서로 다름을 알 수 있다. 
+
 * 출력결과에서 도표의 크기는 `par()`에서 조정할 수도 있고, R Studio의 R markdown 에서 조정할 수도 있다. Graphic 수업에서 보다 자세히 다룰 예정이다.
 
 ```{r, Scatter Diagram, fig.width = 5, fig.height = 5}
@@ -76,7 +77,7 @@ abline(lm(weight ~ height, data = rn96)$coefficient)
 * 선형모형으로 분석하기 위하여 별도의 `R` 오브젝트로 저장한다.
 
 ```{r, regression models}
-rn96.lm<-lm(weight~height, data=rn96)
+rn96.lm <- lm(weight ~ height, data = rn96)
 ```
 
 #### 회귀계수와 관련 통계량 살피기. 
@@ -107,7 +108,7 @@ search()
 
 #### BMI 계산
 
-* 체질량지수라고 알려져 있는 BMI(Body Mass Index) 공식은 $\frac{몸무게(kg)}{키^2(m)}$로 주어진다. 이는 벨기에의 수학자, 천문학자이자 사회통계학자로 알려져 있는 아돌프 케틀레의 업적 중 하나이다. 아래 계산에서 `round()`를 씌우지 않으면 어떤 출력이 나오고, `digits = ` 를 바꿔 가며 결과를 비교해 보자.
+* 체질량지수라고 알려져 있는 BMI(Body Mass Index) 공식은 $\frac{몸무게(kg)}{키^2(m)}$로 주어진다. 이는 벨기에의 수학자, 천문학자이자 사회통계학자로 알려져 있는 아돌프 케틀레의 업적 중 하나이다. 아래 계산에서 `round()`를 씌우지 않으면 어떤 출력이 나오는지 살펴 보고, `digits = ` 를 바꿔 가며 결과를 비교해 보자. 위에서 `par(digits = 2)`라고 설정했을 때 하고의 차이를 생각해 보자.
 
 * `rn96`에 BMI 계산 결과를 합쳐 보기 위해서 `cbind()`(column끼리 묶는다)를 사용하였다. 키, 몸무게, BMI가 모두 숫자변수이기 때문에 가능하다. 
 
@@ -115,7 +116,7 @@ search()
 
 ```{r, BMI computation}
 (BMI <- weight/(height / 100)^2)
-(BMI <- round(weight/(height/100)^2,digits=1))
+(BMI <- round(weight/(height/100)^2, digits=1))
 head(cbind(rn96, BMI))
 tail(cbind(rn96, BMI), n = 10)
 ```
