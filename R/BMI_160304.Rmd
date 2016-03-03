@@ -1,5 +1,5 @@
 ---
-title: "Quetelet's Body Mass Index"
+title: "Quetelet's Body Mass Index with rn96 data"
 author: "coop711"
 date: "`r Sys.Date()`"
 output: html_document
