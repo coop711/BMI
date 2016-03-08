@@ -313,7 +313,7 @@ apply(rn96, 2, mean)</code></pre>
 <div id="height--weight---." class="section level4">
 <h4><code>height</code> 와 <code>weight</code> 의 산점도 그리기.</h4>
 <ul>
-<li><p><code>x</code>축에 독립변수로 들어가는 변수와 <code>y</code>축에 들어가는 종속변수를 설정하는 여러가지 방법이 있음을 알 수 있다. 동일한 <code>plot()</code>이지만 출력 결과에서 default로 나오는 각 축의 label 값이 서로 다름을 알 수 있다.</p></li>
+<li><p><code>x</code>축에 독립변수로 들어가는 변수와 <code>y</code>축에 들어가는 종속변수를 설정하는 여러가지 방법이 있음을 알 수 있다. 동일한 <code>plot()</code>이지만 출력 결과에서 default로 나오는 각 축의 label 값이 서로 다름을 알 수 있다. 맨 마지막 방법에 유의하라.</p></li>
 <li><p>출력결과에서 도표의 크기는 <code>par()</code>에서 조정할 수도 있고, R Studio의 R markdown 에서 조정할 수도 있다. Graphic 수업에서 보다 자세히 다룰 예정이다.</p></li>
 </ul>
 <pre class="r"><code>plot(weight ~ height, data = rn96)</code></pre>
@@ -592,6 +592,63 @@ weight &lt;- rn96$weight</code></pre>
 ##   60 | 000
 ##   62 | 00
 ##   64 | 0</code></pre>
+</div>
+<div id="bmi----" class="section level4">
+<h4>BMI를 토대로 한 비만도 판정</h4>
+<ul>
+<li>18.5 미만은 underweight, 18.5 ~ 24.9 는 Normal, 25 ~ 29.9 는 Overweight, 30 이상은 Obese 로 판정</li>
+</ul>
+<pre class="r"><code>rn96$BMI &lt;- BMI
+rn96$obesity &lt;- ifelse(BMI &lt; 18.5, &quot;Underweight&quot;, ifelse(BMI &gt;= 18.5 &amp; BMI &lt; 24.9, &quot;Normal&quot;, ifelse(BMI &gt;= 25 &amp; BMI &lt; 29.9, &quot;Overweight&quot;, &quot;Obese&quot;)))
+rn96</code></pre>
+<pre><code>##    height weight  BMI     obesity
+## 1     161     50 19.3      Normal
+## 2     155     49 20.4      Normal
+## 3     158     42 16.8 Underweight
+## 4     170     65 22.5      Normal
+## 5     160     60 23.4      Normal
+## 6     156     52 21.4      Normal
+## 7     162     58 22.1      Normal
+## 8     158     46 18.4 Underweight
+## 9     158     45 18.0 Underweight
+## 10    167     51 18.3 Underweight
+## 11    160     50 19.5      Normal
+## 12    155     42 17.5 Underweight
+## 13    154     53 22.3      Normal
+## 14    155     52 21.6      Normal
+## 15    157     48 19.5      Normal
+## 16    157     48 19.5      Normal
+## 17    160     49 19.1      Normal
+## 18    158     52 20.8      Normal
+## 19    160     51 19.9      Normal
+## 20    160     53 20.7      Normal
+## 21    152     44 19.0      Normal
+## 22    154     56 23.6      Normal
+## 23    150     63 28.0  Overweight
+## 24    161     52 20.1      Normal
+## 25    162     57 21.7      Normal
+## 26    164     49 18.2 Underweight
+## 27    161     52 20.1      Normal
+## 28    155     54 22.5      Normal
+## 29    159     46 18.2 Underweight
+## 30    163     50 18.8      Normal
+## 31    159     61 24.1      Normal
+## 32    160     55 21.5      Normal
+## 33    158     45 18.0 Underweight
+## 34    165     63 23.1      Normal
+## 35    156     60 24.7      Normal
+## 36    163     56 21.1      Normal
+## 37    155     52 21.6      Normal
+## 38    164     47 17.5 Underweight
+## 39    163     52 19.6      Normal
+## 40    168     55 19.5      Normal
+## 41    157     48 19.5      Normal</code></pre>
+<pre class="r"><code>str(rn96)</code></pre>
+<pre><code>## 'data.frame':    41 obs. of  4 variables:
+##  $ height : int  161 155 158 170 160 156 162 158 158 167 ...
+##  $ weight : int  50 49 42 65 60 52 58 46 45 51 ...
+##  $ BMI    : num  19.3 20.4 16.8 22.5 23.4 21.4 22.1 18.4 18 18.3 ...
+##  $ obesity: chr  &quot;Normal&quot; &quot;Normal&quot; &quot;Underweight&quot; &quot;Normal&quot; ...</code></pre>
 </div>
 <div id="normality-" class="section level4">
 <h4>정규성(normality) 살펴보기</h4>

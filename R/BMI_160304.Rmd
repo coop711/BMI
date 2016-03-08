@@ -55,7 +55,7 @@ options(digits = 7)
 
 #### `height` 와 `weight` 의 산점도 그리기. 
 
-* `x`축에 독립변수로 들어가는 변수와 `y`축에 들어가는 종속변수를 설정하는 여러가지 방법이 있음을 알 수 있다. 동일한 `plot()`이지만 출력 결과에서 default로 나오는 각 축의 label 값이 서로 다름을 알 수 있다. 
+* `x`축에 독립변수로 들어가는 변수와 `y`축에 들어가는 종속변수를 설정하는 여러가지 방법이 있음을 알 수 있다. 동일한 `plot()`이지만 출력 결과에서 default로 나오는 각 축의 label 값이 서로 다름을 알 수 있다. 맨 마지막 방법에 유의하라.
 
 * 출력결과에서 도표의 크기는 `par()`에서 조정할 수도 있고, R Studio의 R markdown 에서 조정할 수도 있다. Graphic 수업에서 보다 자세히 다룰 예정이다.
 
@@ -149,6 +149,17 @@ stem(BMI, scale=2)
 ```{r, stem and leaf plots for height and weight}
 stem(height)
 stem(weight)
+```
+
+#### BMI를 토대로 한 비만도 판정
+
+* 18.5 미만은 underweight, 18.5 ~ 24.9 는 Normal, 25 ~ 29.9 는 Overweight, 30 이상은 Obese 로 판정
+
+```{r, obesity}
+rn96$BMI <- BMI
+rn96$obesity <- ifelse(BMI < 18.5, "Underweight", ifelse(BMI >= 18.5 & BMI < 24.9, "Normal", ifelse(BMI >= 25 & BMI < 29.9, "Overweight", "Obese")))
+rn96
+str(rn96)
 ```
 
 #### 정규성(normality) 살펴보기
