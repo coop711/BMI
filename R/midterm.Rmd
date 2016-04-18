@@ -1,0 +1,278 @@
+---
+title : "통계적방법론 중간고사"
+author : "coop711"
+date : "2015년 4월 21일"
+--- 
+
+학번 ________________ 
+
+이름 ________________
+
+1. 다음은 통계적 방법론 중 어느 단계를 설명하는가?
+
+- The first kind of data analysis performed
+- Commonly applied to census data
+
+가. Descriptive
+
+나. Exploratory
+
+다. Inferential
+
+라. Predictive
+
+1. 다음은 rn96 자료에서 키와 몸무게의 관계를 선형모형으로 적합시킨 결과이다. 위와 아래의 차이는 무엇인가? 기울기와 절편은 유의하다고 할 수 있는지 등,이 결과를 요약하여 보고한다면 뭐라고 할 것인지 간단히 기술하시오.
+
+```{r, echo=FALSE}
+load("rn96.rda")
+lm(weight ~ height, data = rn96)
+summary(lm(weight ~ height, data = rn96))
+```
+
+----
+
+3. 다음은 rn96 자료로부터 BMI를 계산하여 줄기-잎 그림으로 나타낸 것이다. 
+
+```{r}
+stem(BMI, scale=2)
+```
+
+3-1. Quetelet가 BMI(체질량지수)를  $\frac{몸무게(kg)}{키^2(m)}$로 정의한 이유를 간단히 설명하시오.
+
+3-2. 이 줄기-잎 그림으로 나타난 BMI의 분포로부터 어느 정도의 인원이 정상인 집단에 속하는 지 등을 포함하여 어떤 설명을 할 수 있는지 간단히 기술하시오.  
+
+3-3. scale=2 는 어떠한 구실을 하는가?
+
+-----
+
+4. rn96자료의 몸무게와 키 값들이 정규분포에 가까운지 알아보기 위하여 qqnorm을 그려보았다.
+어떻게 판단되는지 간단히 기술하시오.
+
+```{r fig.width=8, fig.height=4.5, echo=FALSE}
+load("rn96.rda")
+par(mfrow=c(1,2))
+qqnorm(rn96$height, main="Q-Q norm for Height")
+qqnorm(rn96$weight, main="Q-Q norm for Weight")
+par(mfrow=c(1,1))
+```
+----
+
+5. 또다른 정규성 테스트의 일환으로 ECDF를 그려보았다. 어떻게 판단되는지 간단히 기술하시오.
+
+```{r fig.width=8, fig.height=4, echo=FALSE}
+par(mfrow=c(1,2))
+mean.height<-mean(rn96$height)
+sd.height<-sd(rn96$height)
+min.height<-min(rn96$height)
+max.height<-max(rn96$height)
+x.height<-seq(min.height,max.height,1/100)
+plot(ecdf(rn96$height), main="ECDF for Height")
+lines(x.height,pnorm(x.height,mean.height,sd.height),col="red")
+mean.weight<-mean(rn96$weight)
+sd.weight<-sd(rn96$weight)
+min.weight<-min(rn96$weight)
+max.weight<-max(rn96$weight)
+x.weight<-seq(min.weight,max.weight,1/100)
+plot(ecdf(rn96$weight), main="ECDF for Weight")
+lines(x.weight,pnorm(x.weight,mean.weight,sd.weight),col="red")
+```
+
+----
+
+6. 다음 정규성 테스트 결과 중 가장 신뢰성이 떨어지는 것은 어느 것인가?
+
+```{r echo=FALSE}
+library(nortest)
+ad.test(BMI)
+cvm.test(BMI)
+lillie.test(BMI)
+pearson.test(BMI)
+```
+
+----
+
+----
+
+----
+
+7. Quetelet 의 가슴둘레 자료에 대하여 qqnorm 을 그려 보았다.
+
+```{r fig.width=8, fig.height=4}
+load("quetelet.rda")
+par(mfrow=c(1,2))
+qqnorm(quetelet.long, main="Normal Q-Q Plot w.o. Noise")
+r.noise<-runif(5738)-0.5
+qqnorm(quetelet.long+r.noise, main="Normal Q-Q Plot with Noise")
+par(mfrow=c(1,1))
+```
+
+7-1. 이 자료에 대하여 그대로 ad.test 등을 적용하면 어떤 결과를 얻게될 것인가?
+
+가. 매우 높은 p-value로 채택된다.
+
+나. 0.05를 약간 상회하는  p-value로 채택된다.
+
+다. 0.05를 약간 하회하는 p-value로 기각된다.
+
+라. 매우 낮은 p-value로 기각된다.
+
+7-2. 두번째 qqnorm에서 random noise를 더하는 것은 어떤 근거로 가능한지 R-code를 이용하여 간단히 설명하시오.
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+-----
+
+
+
+8. matching 자료에 대하여 이론적 확률값에 대한 적합도 테스트를 실시하였는데 다음과 같은 결과가 나왔다. 
+
+8-1. 이 실험에서 맷칭 개수의 기대값과 표준편차는 _____$\pm$_____ 이다.
+
+
+8-2. 아래 카이제곱 적합도 테스트 수행과정에 경고 메시지가 나온 이유는 무엇인지 설명하고 해결책으로 제시한 두번째 방안을 간단히 설명하시오.
+
+```{r}
+load("matching.rda")
+chisq.test(x=matching$o.matching,p=matching$p.matching)
+chisq.test(x=matching$o.matching,p=matching$p.matching, simulate.p.value=TRUE)
+```
+
+-----
+
+-----
+
+9. lottery 자료의 당첨번호가 일양분포에 따르는지 알아보기 위하여 10개의 동일한 구간으로 나눈 후 카이제곱 적합도 테스트를수행하였다. 
+
+9-1. 귀무가설 하에서 이 카이제곱 통계량은 _____$\pm$_____ 일 것으로 기대된다.
+
+9-2. 중간과정과 결과를 보고 어떻게 결론을 내릴 수 있는지 간단히 설명하시오.
+
+```{r}
+load("lottery.rda")
+lottery.number.10<-cut(lottery$lottery.number, include.lowest=T, right=F, breaks=seq(0, 1000, by=100))
+chisq.test(table(lottery.number.10))
+```
+
+-----
+
+-----
+
+10. crimtab 자료를 이용하여 student 의 모의실험을 재현하려고 한다. 
+
+10-1. 자유도 $n$인 t 분포의 기대값과 표준편차는 각각 얼마인가? (단 $n \>= 3$) 
+
+가. 0, 1
+
+나. 1, 1
+
+다. 0, $\sqrt{\frac{n}{n-2}}$
+
+라. 0, $\sqrt{\frac{n-2}{n}}$
+
+10-2. 각 코드가 수행하는 내용을 한 줄 이내로 간단히 설명하시오.
+
+```{r fig.width=5, fig.height=5}
+load("crimtab_150416.rda")
+crimtab.shuffle<-crimtab.3.long[sample(1:3000),]
+crimtab.shuffle.sample.id<-as.factor(rep(1:750, each=4))
+crimtab.shuffle.sample.mean.finger<-tapply(crimtab.shuffle[,1], crimtab.shuffle.sample.id, mean)
+crimtab.shuffle.sample.sd.finger<-tapply(crimtab.shuffle[,1], crimtab.shuffle.sample.id, sd)
+crimtab.shuffle.sample.t<-(crimtab.shuffle.sample.mean.finger-mean(crimtab.3.long[,1]))/(crimtab.shuffle.sample.sd.finger/sqrt(4))
+t.inf<-is.infinite(crimtab.shuffle.sample.t)
+crimtab.shuffle.sample.t[t.inf]
+crimtab.shuffle.sample.t[t.inf]<-6*sign(crimtab.shuffle.sample.t[t.inf])
+mean(crimtab.shuffle.sample.t)
+sd(crimtab.shuffle.sample.t)
+```
+```{r fig.width=6, fig.height=5}
+hist(crimtab.shuffle.sample.t,prob=T,nclass=20,xlim=c(-6,6), ylim=c(0,0.6), main="Histogram of t-statistics", xlab="Sampled t-values")
+lines(seq(-6,6,by=0.01), dt(seq(-6,6, by=0.01), df=3))
+lines(seq(-6,6,by=0.01), dnorm(seq(-6,6, by=0.01)), col="red")
+legend("topleft", inset=0.05, lty=1, col=c("black","red"), legend=c("t with df=3", "standard normal"))
+```
+
+-----
+
+-----
+
+11. Cushny and Peebles의 sleep 자료에서 두 수면제의 효과에 차이가 없다는 가설을 검증하고자 한다.
+
+11-1. 정규성 가정이 의문시될 때 사용할 수 있는 방법은(Paired 임에 유의!)?
+
+가. Wilcoxon Signed Rank Test
+
+나. Wilcoxon Rank Sum Test
+
+다. Mann-Whitney Test
+
+라. Kolmogorov-Smirnov Test  
+
+
+11-2. 다음 t-test 결과를 보고 간단히 분석하시오. 
+
+```{r echo=FALSE}
+t.test(extra~group, data=sleep, paired=T)
+```
+
+12. 수강생들을 대상으로 랜덤화의 효과를 살펴보고자 한다. 
+
+
+12-1. 다음 어느 수업의 수강생들을 랜덤하게 두 집단으로 나누는 과정을 보고 한 줄이내로 분석하시오.
+
+```
+red.id<-sample(1:58, size=29)
+```
+
+```{r}
+load("random_id_1501.rda")
+load("red_black_1501_0413.rda")
+red.id
+class.roll.1501$group<-factor(ifelse((1:58) %in% red.id, "red", "black"), levels=c("red", "black"))
+black.id<-(1:58)[-red.id]
+```
+
+12-2. 13학번을 기준으로 나눠 보았다. 랜덤화 효과를 확인할 수 있는가?
+
+```{r echo=FALSE}
+ID.13<-factor(ifelse(substr(class.roll.1501$ID, 1, 4) >= 2013, "younger.13", "older.13"), levels=c("younger.13", "older.13"))
+table(class.roll.1501$group, ID.13)
+chisq.test(table(class.roll.1501$group, ID.13))
+```
+
+12-3. 실험에 참가한 학생들의 응답을 가지고 양쪽 동영상 교육의 효과를 비교하고자 한다. 표본의 크기가 다소 애매하기 때문에 반드시 거쳐야 할 과정을 열거하였다. 등분산 검정을 수행하기에 적절치 못한 R의 test 함수를 고른다면?
+
+가. var.test
+
+나. bartlett.test
+
+다. fisher.test
+
+라. fligner.test
+
+12-4. 정규성 가정이 의심될 때 사용할 수 있는 방법을 고르시오.
+
+가. Wilcoxon Signed Rank Test
+
+나. Wilcoxon Rank Sum Test
+
+다. Shapiro-Wilk Test
+
+라. Kolmogorov-Smirnov Test  
